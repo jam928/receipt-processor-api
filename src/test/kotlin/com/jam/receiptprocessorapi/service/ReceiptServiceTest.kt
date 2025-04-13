@@ -11,22 +11,16 @@ import com.jam.receiptprocessorapi.repository.ReceiptRepository
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
-import org.apache.coyote.http11.Constants.a
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import org.springframework.data.jpa.domain.AbstractPersistable_.id
 import java.io.File
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
 import java.util.*
 import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
-import kotlin.test.assertNull
-import kotlin.test.assertTrue
 
 
 @ExtendWith(MockKExtension::class)
@@ -74,6 +68,8 @@ class ReceiptServiceTest {
     @CsvSource(
         "receipt_1.json, 28.0",
         "receipt_2.json, 109.0",
+        "simple_receipt.json, 31.0",
+        "morning_receipt.json, 15.0"
     )
     fun `test points with various receipts`(fileName: String, points: Double) {
         val jsonFile = File(RESOURCES_DIR + "json/$fileName")

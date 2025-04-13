@@ -56,6 +56,8 @@ class ReceiptControllerIntegrationTest {
     @CsvSource(
         "receipt_1.json, 28.0",
         "receipt_2.json, 109.0",
+        "simple_receipt.json, 31.0",
+        "morning_receipt.json, 15.0"
     )
     fun `test points with various receipts`(fileName: String, points: Double) {
         val json = File(RESOURCES_DIR + "json/$fileName").readText(Charsets.UTF_8)
