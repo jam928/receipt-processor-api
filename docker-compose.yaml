@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  gradle-app:
+    image: gradle:8.5-jdk17
+    container_name: receipt-processor-api
+    volumes:
+      - .:/home/gradle/project
+      - gradle-cache:/home/gradle/.gradle
+    working_dir: /home/gradle/project
+    command: gradle bootRun
+    ports:
+      - "8080:8080"  # Maps container port 8080 to your local machine
+    environment:
+      - GRADLE_USER_HOME=/home/gradle/.gradle
+
+  gradle-test:
+    image: gradle:8.5-jdk17
+    container_name: gradle-test-runner
+    volumes:
+      - .:/home/gradle/project
+      - gradle-cache:/home/gradle/.gradle # prevents from re-downloading gradle dependencies for every run
+    working_dir: /home/gradle/project
+    command: gradle test
+    environment:
+      - GRADLE_USER_HOME=/home/gradle/.gradle
+
+volumes:
+  receipt-db-data:
+  gradle-cache:

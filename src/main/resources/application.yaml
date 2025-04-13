@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: receipt-processor-api
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:receipt-db
+    username: sa
+    password: password
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true # http://localhost:8080/h2-console
+
+llm:
+  generated: false
