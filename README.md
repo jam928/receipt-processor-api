@@ -24,9 +24,8 @@ docker compose up gradle-test # to run the tests
 ```
 Swagger Page: http://localhost:8080/swagger-ui/index.html
 ---
---- 
 
-## Test Cases
+## JSON Files used in Test Cases
 - [Morning Receipt](./src/test/resources/json/morning_receipt.json)
 - [Simple Receipt](./src/test/resources/json/simple_receipt.json)
 - [Target Receipt](./src/test/resources/json/target_receipt.json)
@@ -44,8 +43,8 @@ Swagger Page: http://localhost:8080/swagger-ui/index.html
 ### Clone the repo
 
 ```bash
-git clone https://github.com/yourusername/your-repo.git
-cd your-repo
+git clone https://github.com/jam928/receipt-processor-api
+cd receipt-processor-api
 gradle clean build
 gradle bootRun // to run the app 
 gradle tests // to run the automated unit and integration tests
