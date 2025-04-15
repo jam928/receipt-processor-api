@@ -66,8 +66,8 @@ class ReceiptServiceTest {
 
     @ParameterizedTest
     @CsvSource(
-        "receipt_1.json, 28.0",
-        "receipt_2.json, 109.0",
+        "target_receipt.json, 28.0",
+        "mm_corner_market_receipt.json, 109.0",
         "simple_receipt.json, 31.0",
         "morning_receipt.json, 15.0"
     )

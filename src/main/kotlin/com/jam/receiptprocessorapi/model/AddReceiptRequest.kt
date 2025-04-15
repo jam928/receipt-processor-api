@@ -1,5 +1,6 @@
 package com.jam.receiptprocessorapi.model
 
+
 import java.time.LocalDate
 import java.time.LocalTime
 

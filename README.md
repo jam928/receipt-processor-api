@@ -23,7 +23,16 @@ docker compose up gradle-app # to run the app
 docker compose up gradle-test # to run the tests
 ```
 Swagger Page: http://localhost:8080/swagger-ui/index.html
+---
 --- 
+
+## Test Cases
+- [Morning Receipt](./src/test/resources/json/morning_receipt.json)
+- [Simple Receipt](./src/test/resources/json/simple_receipt.json)
+- [Target Receipt](./src/test/resources/json/target_receipt.json)
+- [M&M Corner Market](./src/test/resources/json/mm_corner_market_receipt.json)
+
+---
 
 ## 🛠️ Prerequisites to  run locally without docker
 

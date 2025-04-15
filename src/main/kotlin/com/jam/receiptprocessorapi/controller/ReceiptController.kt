@@ -6,6 +6,7 @@ import com.jam.receiptprocessorapi.model.AddReceiptResponse
 import com.jam.receiptprocessorapi.model.PointsResponse
 import com.jam.receiptprocessorapi.model.Receipt
 import com.jam.receiptprocessorapi.service.ReceiptService
+import jakarta.validation.Valid
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import java.util.*

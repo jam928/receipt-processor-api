@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.jam.receiptprocessorapi.model.AddReceiptResponse
+import com.jam.receiptprocessorapi.model.ApiError
 import com.jam.receiptprocessorapi.model.PointsResponse
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -36,7 +37,7 @@ class ReceiptControllerIntegrationTest {
 
     @Test
     fun testAddReceipt() {
-        val json = File(RESOURCES_DIR + "json/receipt_1.json").readText(Charsets.UTF_8)
+        val json = File(RESOURCES_DIR + "json/target_receipt.json").readText(Charsets.UTF_8)
 
         val mvcResult = this.mockMvc.perform(
             post("/receipts/process")
@@ -54,8 +55,8 @@ class ReceiptControllerIntegrationTest {
 
     @ParameterizedTest
     @CsvSource(
-        "receipt_1.json, 28.0",
-        "receipt_2.json, 109.0",
+        "target_receipt.json, 28.0",
+        "mm_corner_market_receipt.json, 109.0",
         "simple_receipt.json, 31.0",
         "morning_receipt.json, 15.0"
     )
@@ -82,12 +83,32 @@ class ReceiptControllerIntegrationTest {
 
     @Test
     fun testReceiptNotFound() {
-        val id = UUID.randomUUID().toString()
+        val id = UUID.randomUUID().toString() // this ID has not been added to the in memory db; so it should return a 404
         val pointsMvcResult = this.mockMvc.perform(get("/receipts/$id/points")).andReturn()
-        val response = objectMapper.readValue<Map<String, Any>>(pointsMvcResult.response.contentAsString)
+        val response = objectMapper.readValue<ApiError>(pointsMvcResult.response.contentAsString)
 
-        assertEquals("Resource not found", response["message"])
+        assertEquals("No receipt found for that ID.", response.message)
         assertTrue { pointsMvcResult.response.status == HttpStatus.NOT_FOUND.value() }
+    }
+
+    @Test
+    fun testInvalidAddReceipt() {
+        val json = File(RESOURCES_DIR + "json/invalid_receipt_missing_retailer.json").readText(Charsets.UTF_8)
+
+        val mvcResult = this.mockMvc.perform(
+            post("/receipts/process")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+        )
+            .andReturn()
+
+        val objectMapper = jacksonObjectMapper()
+        val apiError = objectMapper.readValue<ApiError>(mvcResult.response.contentAsString)
+
+        // verify response msg and status code
+        assertEquals(HttpStatus.BAD_REQUEST.value(), mvcResult.response.status)
+        assertEquals("The receipt is invalid.", apiError.message)
+
     }
 
     fun isUUID(string: String?): Boolean {

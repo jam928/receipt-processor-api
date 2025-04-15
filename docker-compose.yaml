@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   gradle-app:
     image: gradle:8.5-jdk17
