@@ -19,7 +19,7 @@ services:
       - .:/home/gradle/project
       - gradle-cache:/home/gradle/.gradle # prevents from re-downloading gradle dependencies for every run
     working_dir: /home/gradle/project
-    command: gradle test
+    command: gradle test --rerun-tasks
     environment:
       - GRADLE_USER_HOME=/home/gradle/.gradle
 
